@@ -63,6 +63,10 @@ export default function Home() {
           <button
             className="text-lg px-4 py-1 rounded-md bg-white hover:scale-110 hover:duration-150 transition-transform"
             onClick={handleStartStopClick}
+            style={{
+              color: breakMessage ? "#EF3340" : "#98B4D4",
+              transition: "color 0.5s ease",
+            }}
           >
             {isRunning ? "stop" : "start"}
           </button>
