@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FaPlay, FaPause } from "react-icons/fa6";
+import { FaUndoAlt } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
@@ -46,8 +49,12 @@ export default function Home() {
   };
 
   const handleReset = () => {
-    setMinutes(35);
-    setSeconds(0);
+    let minutes = breakMessage ? 5 : 35;
+    let seconds = 0;
+
+    setMinutes(minutes);
+    setSeconds(seconds);
+    setIsRunning(false);
   };
 
   return (
@@ -58,36 +65,44 @@ export default function Home() {
         transition: "background 0.5s ease",
       }}
     >
-      <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-white shadow-xl drop-shadow-md">
+      <button
+        className="absolute right-7 top-7 text-2xl p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
+        style={{
+          color: breakMessage ? "#EF3340" : "#98B4D4",
+        }}
+      >
+        <IoSettingsSharp />
+      </button>
+      <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-[#f4f5f0] shadow-xl drop-shadow-md">
         <div
-          className="flex flex-col items-center justify-center h-52 w-52 mt-5 gap-2 rounded-full bg-opacity-30"
+          className="flex flex-col items-center justify-center h-52 w-52 mt-3 gap-2 rounded-full bg-opacity-30"
           style={{
             background: breakMessage ? "#EF3340" : "#98B4D4",
             transition: "background 0.5s ease",
           }}
         >
-          <span className="text-5xl text-white">
+          <span className="text-5xl text-[#f4f5f0]">
             {minutesFormat}:{secondsFormat}
           </span>
         </div>
         <div className="flex flex-row items-center justify-center w-full mt-7 gap-10">
           <button
-            className="text-lg px-4 py-1 h-10 w-50 rounded-lg bg-white hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
+            className="text-lg p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
             onClick={handleStartStopClick}
             style={{
               color: breakMessage ? "#EF3340" : "#98B4D4",
             }}
           >
-            {isRunning ? "stop" : "start"}
+            {isRunning ? <FaPause /> : <FaPlay />}
           </button>
           <button
-            className="text-lg px-4 py-1 h-10 w-50 rounded-lg bg-white hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
+            className="text-lg p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
             onClick={handleReset}
             style={{
               color: breakMessage ? "#EF3340" : "#98B4D4",
             }}
           >
-            reset
+            <FaUndoAlt />
           </button>
         </div>
       </div>
