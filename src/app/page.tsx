@@ -46,47 +46,28 @@ export default function Home() {
   };
 
   return (
-    <>
-      {!breakMessage ? (
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-[#98B4D4]">
-          <div className="flex flex-col items-center justify-center h-60 w-60 gap-2 rounded-full bg-slate-500 bg-opacity-30">
-            <div>
-              <span className="text-5xl text-white">
-                {minutesFormat}:{secondsFormat}
-              </span>
-            </div>
-            <div>
-              <button
-                className="text-lg px-4 py-1 rounded-md bg-white hover:scale-110 hover:duration-150 transition-transform"
-                onClick={handleStartStopClick}
-              >
-                {isRunning ? "stop" : "start"}
-              </button>
-            </div>
-          </div>
-        </main>
-      ) : (
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-[#EF3340]">
-          <div className="flex flex-col items-center justify-center h-60 w-60 gap-2 rounded-full bg-gray-300 bg-opacity-20">
-            <div className="text-sm">
-              Time for a break
-            </div>
-            <div>
-              <span className="text-5xl text-white">
-                {minutesFormat}:{secondsFormat}
-              </span>
-            </div>
-            <div>
-              <button
-                className="text-lg px-4 py-1 rounded-md bg-white hover:scale-110 hover:duration-150 transition-transform"
-                onClick={handleStartStopClick}
-              >
-                {isRunning ? "stop" : "start"}
-              </button>
-            </div>
-          </div>
-        </main>
-      )}
-    </>
+    <main
+      className="flex min-h-screen flex-col items-center justify-center p-24"
+      style={{
+        background: breakMessage ? "#EF3340" : "#98B4D4",
+        transition: "background 0.5s ease", // Add a background color transition
+      }}
+    >
+      <div className="flex flex-col items-center justify-center h-60 w-60 gap-2 rounded-full bg-gray-300 bg-opacity-30">
+        <div>
+          <span className="text-5xl text-white">
+            {minutesFormat}:{secondsFormat}
+          </span>
+        </div>
+        <div>
+          <button
+            className="text-lg px-4 py-1 rounded-md bg-white hover:scale-110 hover:duration-150 transition-transform"
+            onClick={handleStartStopClick}
+          >
+            {isRunning ? "stop" : "start"}
+          </button>
+        </div>
+      </div>
+    </main>
   );
 }
