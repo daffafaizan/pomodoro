@@ -76,7 +76,10 @@ export default function Home() {
     >
       <button
         className="absolute right-7 top-7 text-2xl p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
-        onClick={() => props.setOpenModal("default")}
+        onClick={() => {
+          props.setOpenModal("dismissible");
+          playClick();
+        }}
         style={{
           color: breakMessage ? "#EF3340" : "#98B4D4",
         }}
@@ -84,7 +87,9 @@ export default function Home() {
         <IoSettingsSharp />
       </button>
       <Modal
-        show={props.openModal === "default"}
+        dismissible
+        show={props.openModal === "dismissible"}
+        position="center"
         onClose={() => props.setOpenModal(undefined)}
       >
         <Modal.Header>Terms of Service</Modal.Header>
