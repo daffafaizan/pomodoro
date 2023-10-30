@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { FaUndoAlt } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import clickSound from "../sounds/light-switch.mp3";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
@@ -12,6 +13,11 @@ export default function Home() {
   const [minutes, setMinutes] = useState(35);
   const secondsFormat = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const minutesFormat = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  const clickAudio = new Audio(clickSound);
+
+  const playClick = () => {
+    clickAudio.play();
+  }
 
   useEffect(() => {
     let interval: any;
@@ -88,7 +94,10 @@ export default function Home() {
         <div className="flex flex-row items-center justify-center w-full mt-7 gap-10">
           <button
             className="text-lg p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
-            onClick={handleStartStopClick}
+            onClick={() => {
+              handleStartStopClick();
+              playClick();
+            }}
             style={{
               color: breakMessage ? "#EF3340" : "#98B4D4",
             }}
@@ -97,7 +106,10 @@ export default function Home() {
           </button>
           <button
             className="text-lg p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
-            onClick={handleReset}
+            onClick={() => {
+              handleReset();
+              playClick();
+            }}
             style={{
               color: breakMessage ? "#EF3340" : "#98B4D4",
             }}
