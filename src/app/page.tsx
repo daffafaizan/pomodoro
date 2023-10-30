@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { FaUndoAlt } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { Button, Modal } from "flowbite-react";
 import clickSound from "../sounds/light-switch.mp3";
+import alarmSound from "../sounds/scifi-alarm.mp3";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
@@ -16,10 +17,23 @@ export default function Home() {
   const props = { openModal, setOpenModal };
   const secondsFormat = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const minutesFormat = minutes < 10 ? `0${minutes}` : `${minutes}`;
-  const clickAudio = new Audio(clickSound);
 
+  // Create references to the audio elements
+  const clickAudioRef = useRef(new Audio(clickSound));
+  const alarmAudioRef = useRef(new Audio(alarmSound));
+
+  // Function to play the click sound
   const playClick = () => {
+    const clickAudio = clickAudioRef.current;
+    clickAudio.volume = 0.5; // Adjust the volume (1.0 is maximum)
     clickAudio.play();
+  };
+
+  // Function to play the alarm sound
+  const playAlarm = () => {
+    const alarmAudio = alarmAudioRef.current;
+    alarmAudio.volume = 1.0; // Adjust the volume (1.0 is maximum)
+    alarmAudio.play();
   };
 
   useEffect(() => {
@@ -32,9 +46,10 @@ export default function Home() {
             setSeconds(59);
             setMinutes(minutes - 1);
           } else {
-            let minutes = breakMessage ? 24 : 5;
+            let minutes = breakMessage ? 35 : 5;
             let seconds = 0;
 
+            playAlarm();
             setSeconds(seconds);
             setMinutes(minutes);
             setIsRunning(false);
@@ -92,21 +107,18 @@ export default function Home() {
         position="center"
         onClose={() => props.setOpenModal(undefined)}
       >
-        <Modal.Header>Terms of Service</Modal.Header>
+        <Modal.Header className="flex flex-row items-center justify-center">
+          <span className="text-2xl">Settings</span>
+        </Modal.Header>
         <Modal.Body>
-          <div className="space-y-6">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              With less than a month to go before the European Union enacts new
-              consumer privacy laws for its citizens, companies around the world
-              are updating their terms of service agreements to comply.
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              The European Union’s General Data Protection Regulation (G.D.P.R.)
-              goes into effect on May 25 and is meant to ensure a common set of
-              data rights in the European Union. It requires organizations to
-              notify users as soon as possible of high-risk data breaches that
-              could personally affect them.
-            </p>
+          <div className="flex flex-row space-x-3">
+            <input
+              id="minutes"
+              className="h-8 w-24 rounded-md"
+              style={{
+                background: breakMessage ? "#EF3340" : "#98B4D4",
+              }}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>
