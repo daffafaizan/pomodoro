@@ -8,6 +8,7 @@ import SettingsModal from "./components/settings";
 import clickSound from "./assets/sounds/button-push-chunky-plastic-button.mp3";
 import settingsSound from "./assets/sounds/click-short-mouse-click.mp3";
 import alarmSound from "./assets/sounds/scifi-alarm.mp3";
+import Toggle from "./components/toggle";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
@@ -117,6 +118,7 @@ export default function Home() {
       >
         <IoSettingsSharp />
       </button>
+      <Toggle />
       <SettingsModal
         openModal={openModal}
         onClose={() => setOpenModal(undefined)}
