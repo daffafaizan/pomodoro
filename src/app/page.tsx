@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { FaUndoAlt } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
-import { Button, Modal } from "flowbite-react";
 import SettingsModal from "./components/settings";
 import clickSound from "./assets/sounds/button-push-chunky-plastic-button.mp3";
 import settingsSound from "./assets/sounds/click-short-mouse-click.mp3";
@@ -13,6 +12,7 @@ import alarmSound from "./assets/sounds/scifi-alarm.mp3";
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
   const [breakMessage, setBreakMessage] = useState(false);
+  const [breakMinutes, setBreakMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(35);
   const [openModal, setOpenModal] = useState<string | undefined>();
@@ -46,6 +46,12 @@ export default function Home() {
     settingsAudio.play();
   };
 
+  // Function to retrieve new time for focus or break
+  const newTime = (newFocus: number, newBreak: number) => {
+    setMinutes(newFocus);
+    setBreakMinutes(newBreak);
+  };
+
   useEffect(() => {
     let interval: any;
 
@@ -56,7 +62,7 @@ export default function Home() {
             setSeconds(59);
             setMinutes(minutes - 1);
           } else {
-            let minutes = breakMessage ? 35 : 5;
+            let minutes = breakMessage ? 35 : breakMinutes;
             let seconds = 0;
 
             playAlarm();
@@ -83,7 +89,7 @@ export default function Home() {
   };
 
   const handleReset = () => {
-    let minutes = breakMessage ? 5 : 35;
+    let minutes = breakMessage ? breakMinutes : 35;
     let seconds = 0;
 
     setMinutes(minutes);
@@ -115,6 +121,7 @@ export default function Home() {
         openModal={openModal}
         onClose={() => setOpenModal(undefined)}
         breakMessage={breakMessage}
+        newTime={newTime}
       />
       <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-[#f4f5f0] shadow-xl drop-shadow-md">
         <div
