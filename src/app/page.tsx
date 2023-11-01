@@ -5,8 +5,10 @@ import { FaPlay, FaPause } from "react-icons/fa6";
 import { FaUndoAlt } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { Button, Modal } from "flowbite-react";
-import clickSound from "../sounds/light-switch.mp3";
-import alarmSound from "../sounds/scifi-alarm.mp3";
+import SettingsModal from "./components/settings";
+import clickSound from "./assets/sounds/button-push-chunky-plastic-button.mp3";
+import settingsSound from "./assets/sounds/click-short-mouse-click.mp3";
+import alarmSound from "./assets/sounds/scifi-alarm.mp3";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
@@ -20,6 +22,7 @@ export default function Home() {
 
   // Create references to the audio elements
   const clickAudioRef = useRef(new Audio(clickSound));
+  const settingsAudioRef = useRef(new Audio(settingsSound));
   const alarmAudioRef = useRef(new Audio(alarmSound));
 
   // Function to play the click sound
@@ -34,6 +37,13 @@ export default function Home() {
     const alarmAudio = alarmAudioRef.current;
     alarmAudio.volume = 1.0; // Adjust the volume (1.0 is maximum)
     alarmAudio.play();
+  };
+
+  // Function to play the settings sound
+  const playSettings = () => {
+    const settingsAudio = settingsAudioRef.current;
+    settingsAudio.volume = 1.0;
+    settingsAudio.play();
   };
 
   useEffect(() => {
@@ -92,8 +102,8 @@ export default function Home() {
       <button
         className="absolute right-7 top-7 text-2xl p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
         onClick={() => {
-          props.setOpenModal("dismissible");
-          playClick();
+          setOpenModal("dismissible");
+          playSettings();
         }}
         style={{
           color: breakMessage ? "#EF3340" : "#98B4D4",
@@ -101,35 +111,11 @@ export default function Home() {
       >
         <IoSettingsSharp />
       </button>
-      <Modal
-        dismissible
-        show={props.openModal === "dismissible"}
-        position="center"
-        onClose={() => props.setOpenModal(undefined)}
-      >
-        <Modal.Header className="flex flex-row items-center justify-center">
-          <span className="text-2xl">Settings</span>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="flex flex-row space-x-3">
-            <input
-              id="minutes"
-              className="h-8 w-24 rounded-md"
-              style={{
-                background: breakMessage ? "#EF3340" : "#98B4D4",
-              }}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => props.setOpenModal(undefined)}>
-            I accept
-          </Button>
-          <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-            Decline
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <SettingsModal
+        openModal={openModal}
+        onClose={() => setOpenModal(undefined)}
+        breakMessage={breakMessage}
+      />
       <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-[#f4f5f0] shadow-xl drop-shadow-md">
         <div
           className="flex flex-col items-center justify-center h-52 w-52 mt-3 gap-2 rounded-full bg-opacity-30"
