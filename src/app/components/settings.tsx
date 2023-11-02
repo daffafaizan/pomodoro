@@ -4,38 +4,77 @@ import { Modal } from "flowbite-react";
 import { PiTimerBold } from "react-icons/pi";
 import { MdDone } from "react-icons/md";
 import { useState } from "react";
+import { error } from "console";
 
 interface SettingsModalProps {
   openModal: string | undefined;
   breakMessage: boolean;
   minutes: number;
-  seconds: number;
+  breakMinutes: number;
+  setBreakMinutes: any;
   newTime: (newFocus: number, newBreak: number) => void;
   onClose: () => void;
   playSound: () => void;
+  playError: () => void;
 }
 
 export default function SettingsModal(props: SettingsModalProps) {
   const color = props.breakMessage ? "#EF3340" : "#98B4D4";
   const [newFocus, setNewFocus] = useState(props.minutes);
-  const [newBreak, setNewBreak] = useState(props.seconds);
+  const [newBreak, setNewBreak] = useState(props.breakMinutes);
+  const [errorDetected, setErrorDetected] = useState(false);
+
   const handleChangeFocus = (event: any) => {
-    setNewFocus(event.target.value);
+    if (
+      Number.isInteger(parseInt(event.target.value)) ||
+      event.target.value == ""
+    ) {
+      if (event.target.value == "") {
+        setNewFocus(props.minutes);
+      } else {
+        setNewFocus(event.target.value);
+      }
+    } else {
+      setNewFocus(props.minutes);
+      setErrorDetected(true);
+    }
   };
   const handleChangeBreak = (event: any) => {
-    setNewBreak(event.target.value);
+    if (
+      Number.isInteger(parseInt(event.target.value)) ||
+      event.target.value == ""
+    ) {
+      if (event.target.value == "") {
+        setNewBreak(props.breakMinutes);
+      } else {
+        setNewBreak(event.target.value);
+      }
+    } else {
+      setNewBreak(props.breakMinutes);
+      setErrorDetected(true);
+    }
   };
+
   const submitChange = () => {
-    props.newTime(newFocus, newBreak)
+    if (errorDetected) {
+      props.playError();
+    } else {
+      props.playSound();
+      props.newTime(newFocus, newBreak);
+      props.onClose();
+    }
   };
 
   return (
     <Modal
       dismissible
-      size="md"
+      size="sm"
       show={props.openModal === "dismissible"}
       position="center"
-      onClose={props.onClose}
+      onClose={() => {
+        props.onClose();
+        props.playSound();
+      }}
     >
       <Modal.Header className="flex flex-row items-center justify-center h-14"></Modal.Header>
       <Modal.Body>
@@ -86,11 +125,7 @@ export default function SettingsModal(props: SettingsModalProps) {
         <div className="flex flex-col w-full justify-center items-center -mt-3 -mb-2">
           <button
             className="text-lg p-[14px] rounded-full hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
-            onClick={() => {
-              props.onClose();
-              props.playSound();
-              submitChange();
-            }}
+            onClick={submitChange}
             style={{
               color: props.breakMessage ? "#EF3340" : "#98B4D4",
             }}

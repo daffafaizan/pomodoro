@@ -4,6 +4,7 @@ interface ToggleProps {
   setBreakMessage: any;
   setMinutes: any;
   setSeconds: any;
+  setIsRunning: any;
 }
 
 export default function Toggle(props: ToggleProps) {
@@ -21,6 +22,7 @@ export default function Toggle(props: ToggleProps) {
           props.setBreakMessage(!props.breakMessage);
           props.setMinutes(props.breakMessage ? 35 : 5);
           props.setSeconds(0);
+          props.setIsRunning(false);
         }}
       />
       <div
