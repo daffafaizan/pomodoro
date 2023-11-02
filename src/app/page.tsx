@@ -8,7 +8,9 @@ import SettingsModal from "./components/settings";
 import clickSound from "./assets/sounds/button-push-chunky-plastic-button.mp3";
 import settingsSound from "./assets/sounds/click-short-mouse-click.mp3";
 import alarmSound from "./assets/sounds/scifi-alarm.mp3";
+import errorSound from "./assets/sounds/negative-click.mp3";
 import Toggle from "./components/toggle";
+import { error } from "console";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
@@ -25,27 +27,32 @@ export default function Home() {
   const clickAudioRef = useRef(new Audio(clickSound));
   const settingsAudioRef = useRef(new Audio(settingsSound));
   const alarmAudioRef = useRef(new Audio(alarmSound));
+  const errorAudioRef = useRef(new Audio(errorSound));
 
-  // Function to play the click sound
+  // Functions to play the sounds
   const playClick = () => {
     const clickAudio = clickAudioRef.current;
     clickAudio.volume = 0.5; // Adjust the volume (1.0 is maximum)
     clickAudio.play();
   };
 
-  // Function to play the alarm sound
   const playAlarm = () => {
     const alarmAudio = alarmAudioRef.current;
-    alarmAudio.volume = 1.0; // Adjust the volume (1.0 is maximum)
+    alarmAudio.volume = 0.5; // Adjust the volume (1.0 is maximum)
     alarmAudio.play();
   };
 
-  // Function to play the settings sound
   const playSettings = () => {
     const settingsAudio = settingsAudioRef.current;
-    settingsAudio.volume = 1.0;
+    settingsAudio.volume = 0.5;
     settingsAudio.play();
   };
+
+  const playError = () => {
+    const errorAudio = errorAudioRef.current;
+    errorAudio.volume = 0.5;
+    errorAudio.play()
+  }
 
   // Function to retrieve new time for focus or break
   const newTime = (newFocus: number, newBreak: number) => {
@@ -124,15 +131,18 @@ export default function Home() {
         setBreakMessage={setBreakMessage}
         setMinutes={setMinutes}
         setSeconds={setSeconds}
+        setIsRunning={setIsRunning}
       />
       <SettingsModal
         openModal={openModal}
         breakMessage={breakMessage}
+        setBreakMinutes={setBreakMinutes}
+        breakMinutes={breakMinutes}
         newTime={newTime}
         onClose={() => setOpenModal(undefined)}
         playSound={playSettings}
+        playError={playError}
         minutes={minutes}
-        seconds={seconds}
       />
       <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-[#f4f5f0] shadow-xl drop-shadow-md">
         <div
