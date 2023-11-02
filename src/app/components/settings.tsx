@@ -72,6 +72,7 @@ export default function SettingsModal(props: SettingsModalProps) {
       show={props.openModal === "dismissible"}
       position="center"
       onClose={() => {
+        setErrorDetected(false);
         props.onClose();
         props.playSound();
       }}
