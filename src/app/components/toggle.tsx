@@ -14,9 +14,10 @@ export default function Toggle(props: ToggleProps) {
       <input
         type="checkbox"
         value=""
+        checked={props.breakMessage}
         className="sr-only peer"
         onClick={() => {
-          props.playSound;
+          props.playSound();
           props.setBreakMessage(!props.breakMessage);
           props.setMinutes(props.breakMessage ? 35 : 5);
           props.setSeconds(0);
