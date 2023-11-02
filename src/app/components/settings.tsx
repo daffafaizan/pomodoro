@@ -58,6 +58,8 @@ export default function SettingsModal(props: SettingsModalProps) {
   const submitChange = () => {
     if (errorDetected) {
       props.playError();
+      setErrorDetected(false);
+      props.onClose();
     } else {
       props.playSound();
       props.newTime(newFocus, newBreak);
