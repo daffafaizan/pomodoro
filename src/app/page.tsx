@@ -50,7 +50,7 @@ export default function Home() {
   // Function to retrieve new time for focus or break
   const newTime = (newFocus: number, newBreak: number) => {
     setMinutes(newFocus);
-    setBreakMinutes(newBreak);
+    breakMessage ? setMinutes(newBreak) : setBreakMinutes(newBreak);
   };
 
   useEffect(() => {
@@ -127,9 +127,12 @@ export default function Home() {
       />
       <SettingsModal
         openModal={openModal}
-        onClose={() => setOpenModal(undefined)}
         breakMessage={breakMessage}
         newTime={newTime}
+        onClose={() => setOpenModal(undefined)}
+        playSound={playSettings}
+        minutes={minutes}
+        seconds={seconds}
       />
       <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-[#f4f5f0] shadow-xl drop-shadow-md">
         <div
