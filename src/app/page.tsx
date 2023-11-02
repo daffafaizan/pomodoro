@@ -118,7 +118,13 @@ export default function Home() {
       >
         <IoSettingsSharp />
       </button>
-      <Toggle breakMessage={breakMessage} />
+      <Toggle
+        playSound={playSettings}
+        breakMessage={breakMessage}
+        setBreakMessage={setBreakMessage}
+        setMinutes={setMinutes}
+        setSeconds={setSeconds}
+      />
       <SettingsModal
         openModal={openModal}
         onClose={() => setOpenModal(undefined)}
