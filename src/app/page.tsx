@@ -10,13 +10,12 @@ import settingsSound from "./assets/sounds/click-short-mouse-click.mp3";
 import alarmSound from "./assets/sounds/scifi-alarm.mp3";
 import errorSound from "./assets/sounds/negative-click.mp3";
 import Toggle from "./components/toggle";
-import { error } from "console";
 
 export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
   const [breakMessage, setBreakMessage] = useState(false);
   const [breakMinutes, setBreakMinutes] = useState(5);
-  const [focusMinutes, setFocusMinutes] = useState(35); // TODO: Make different constant for focus
+  const [focusMinutes, setFocusMinutes] = useState(35);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(35);
   const [openModal, setOpenModal] = useState<string | undefined>();
@@ -57,8 +56,9 @@ export default function Home() {
 
   // Function to retrieve new time for focus or break
   const newTime = (newFocus: number, newBreak: number) => {
-    setMinutes(newFocus);
-    breakMessage ? setMinutes(newBreak) : setBreakMinutes(newBreak);
+    setFocusMinutes(newFocus);
+    setBreakMinutes(newBreak);
+    breakMessage ? setMinutes(newBreak) : setMinutes(newFocus);
   };
 
   useEffect(() => {
@@ -133,7 +133,7 @@ export default function Home() {
         setMinutes={setMinutes}
         setSeconds={setSeconds}
         setIsRunning={setIsRunning}
-        minutes={minutes}
+        focusMinutes={focusMinutes}
         breakMinutes={breakMinutes}
       />
       <SettingsModal
