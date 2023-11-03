@@ -1,5 +1,5 @@
 interface ToggleProps {
-  playSound: () => void;
+  //playSound: () => void;
   breakMessage: boolean;
   setBreakMessage: any;
   setMinutes: any;
@@ -19,8 +19,8 @@ export default function Toggle(props: ToggleProps) {
         value=""
         checked={props.breakMessage}
         className="sr-only peer"
-        onClick={() => {
-          props.playSound();
+        onChange={() => {
+          //props.playSound();
           props.setBreakMessage(!props.breakMessage);
           props.setMinutes(
             props.breakMessage ? props.focusMinutes : props.breakMinutes
