@@ -22,13 +22,19 @@ export default function Toggle(props: ToggleProps) {
         onClick={() => {
           props.playSound();
           props.setBreakMessage(!props.breakMessage);
-          props.setMinutes(props.breakMessage ? props.focusMinutes : props.breakMinutes); // When setting new breakMinutes, it overrides focusMinutes because of this function. TODO: Make different useEffect function or modify existing
+          props.setMinutes(
+            props.breakMessage ? props.focusMinutes : props.breakMinutes
+          );
           props.setSeconds(0);
           props.setIsRunning(false);
         }}
       />
       <div
-        className={`w-[104px] h-[54px] bg-gray-200 rounded-full peer peer-checked:bg-[${backgroundColor}] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[50px] after:w-[50px] after:transition-all peer-checked:shadow-md peer-checked:drop-shadow-md shadow-md drop-shadow-md`}
+        className={`w-[104px] h-[54px] border-2 border-white rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-[50px] after:w-[50px] after:transition-all`}
+        style={{
+          backgroundColor: props.breakMessage ? "#EF3340" : "#98B4D4",
+          transition: "background 0.5s ease",
+        }}
       ></div>
     </label>
   );
