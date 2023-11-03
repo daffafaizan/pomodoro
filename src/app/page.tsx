@@ -71,7 +71,7 @@ export default function Home() {
             setSeconds(59);
             setMinutes(minutes - 1);
           } else {
-            let displayMinutes = breakMessage ? minutes : breakMinutes;
+            let displayMinutes = breakMessage ? focusMinutes : breakMinutes;
             let displaySeconds = 0;
 
             playAlarm();
