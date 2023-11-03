@@ -16,6 +16,7 @@ export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
   const [breakMessage, setBreakMessage] = useState(false);
   const [breakMinutes, setBreakMinutes] = useState(5);
+  const [focusMinutes, setFocusMinutes] = useState(35); // TODO: Make different constant for focus
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(35);
   const [openModal, setOpenModal] = useState<string | undefined>();
@@ -70,12 +71,12 @@ export default function Home() {
             setSeconds(59);
             setMinutes(minutes - 1);
           } else {
-            let minutes = breakMessage ? 35 : breakMinutes;
-            let seconds = 0;
+            let displayMinutes = breakMessage ? minutes : breakMinutes;
+            let displaySeconds = 0;
 
             playAlarm();
-            setSeconds(seconds);
-            setMinutes(minutes);
+            setSeconds(displaySeconds);
+            setMinutes(displayMinutes);
             setIsRunning(false);
             setBreakMessage(!breakMessage);
           }
@@ -97,11 +98,11 @@ export default function Home() {
   };
 
   const handleReset = () => {
-    let minutes = breakMessage ? breakMinutes : 35;
-    let seconds = 0;
+    let displayMinutes = breakMessage ? breakMinutes : minutes;
+    let displaySeconds = 0;
 
-    setMinutes(minutes);
-    setSeconds(seconds);
+    setMinutes(displayMinutes);
+    setSeconds(displaySeconds);
     setIsRunning(false);
   };
 
@@ -132,6 +133,8 @@ export default function Home() {
         setMinutes={setMinutes}
         setSeconds={setSeconds}
         setIsRunning={setIsRunning}
+        minutes={minutes}
+        breakMinutes={breakMinutes}
       />
       <SettingsModal
         openModal={openModal}
