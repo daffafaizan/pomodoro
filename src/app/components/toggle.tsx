@@ -5,7 +5,7 @@ interface ToggleProps {
   setMinutes: any;
   setSeconds: any;
   setIsRunning: any;
-  minutes: number;
+  focusMinutes: number;
   breakMinutes: number;
 }
 
@@ -22,7 +22,7 @@ export default function Toggle(props: ToggleProps) {
         onClick={() => {
           props.playSound();
           props.setBreakMessage(!props.breakMessage);
-          props.setMinutes(props.breakMessage ? props.minutes : props.breakMinutes); // When setting new breakMinutes, it overrides focusMinutes because of this function. TODO: Make different useEffect function or modify existing
+          props.setMinutes(props.breakMessage ? props.focusMinutes : props.breakMinutes); // When setting new breakMinutes, it overrides focusMinutes because of this function. TODO: Make different useEffect function or modify existing
           props.setSeconds(0);
           props.setIsRunning(false);
         }}
