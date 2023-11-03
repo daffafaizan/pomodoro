@@ -98,7 +98,7 @@ export default function Home() {
   };
 
   const handleReset = () => {
-    let displayMinutes = breakMessage ? breakMinutes : minutes;
+    let displayMinutes = breakMessage ? breakMinutes : focusMinutes;
     let displaySeconds = 0;
 
     setMinutes(displayMinutes);
@@ -155,7 +155,7 @@ export default function Home() {
             transition: "background 0.5s ease",
           }}
         >
-          <span className="text-5xl text-[#f4f5f0]">
+          <span className="text-5xl text-[#f4f5f0] tracking-wider">
             {minutesFormat}:{secondsFormat}
           </span>
         </div>
