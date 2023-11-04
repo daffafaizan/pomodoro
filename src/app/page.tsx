@@ -23,36 +23,43 @@ export default function Home() {
   const secondsFormat = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const minutesFormat = minutes < 10 ? `0${minutes}` : `${minutes}`;
 
-  // // Create references to the audio elements
-  // const clickAudioRef = useRef(new Audio(clickSound));
-  // const settingsAudioRef = useRef(new Audio(settingsSound));
-  // const alarmAudioRef = useRef(new Audio(alarmSound));
-  // const errorAudioRef = useRef(new Audio(errorSound));
+  // Create references to the audio elements
+  const clickAudioRef = useRef<HTMLAudioElement | null>(null);
+  const settingsAudioRef = useRef<HTMLAudioElement | null>(null);
+  const alarmAudioRef = useRef<HTMLAudioElement | null>(null);
+  const errorAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  // // Functions to play the sounds
-  // const playClick = () => {
-  //   const clickAudio = clickAudioRef.current;
-  //   clickAudio.volume = 0.5; // Adjust the volume (1.0 is maximum)
-  //   clickAudio.play();
-  // };
+  useEffect(() => {
+    clickAudioRef.current = new Audio(clickSound);
+    settingsAudioRef.current = new Audio(settingsSound);
+    alarmAudioRef.current = new Audio(alarmSound);
+    errorAudioRef.current = new Audio(errorSound);
+  }, []);
 
-  // const playAlarm = () => {
-  //   const alarmAudio = alarmAudioRef.current;
-  //   alarmAudio.volume = 0.5; // Adjust the volume (1.0 is maximum)
-  //   alarmAudio.play();
-  // };
+  // Functions to play the sounds
+  const playClick = () => {
+    const clickAudio = clickAudioRef.current;
+    clickAudio!.volume = 0.5; // Adjust the volume (1.0 is maximum)
+    clickAudio!.play();
+  };
 
-  // const playSettings = () => {
-  //   const settingsAudio = settingsAudioRef.current;
-  //   settingsAudio.volume = 0.5;
-  //   settingsAudio.play();
-  // };
+  const playAlarm = () => {
+    const alarmAudio = alarmAudioRef.current;
+    alarmAudio!.volume = 0.5; // Adjust the volume (1.0 is maximum)
+    alarmAudio!.play();
+  };
 
-  // const playError = () => {
-  //   const errorAudio = errorAudioRef.current;
-  //   errorAudio.volume = 0.5;
-  //   errorAudio.play()
-  // }
+  const playSettings = () => {
+    const settingsAudio = settingsAudioRef.current;
+    settingsAudio!.volume = 0.5;
+    settingsAudio!.play();
+  };
+
+  const playError = () => {
+    const errorAudio = errorAudioRef.current;
+    errorAudio!.volume = 0.5;
+    errorAudio!.play()
+  }
 
   // Function to retrieve new time for focus or break
   const newTime = (newFocus: number, newBreak: number) => {
@@ -74,7 +81,7 @@ export default function Home() {
             let displayMinutes = breakMessage ? focusMinutes : breakMinutes;
             let displaySeconds = 0;
 
-            //playAlarm();
+            playAlarm();
             setSeconds(displaySeconds);
             setMinutes(displayMinutes);
             setIsRunning(false);
@@ -118,7 +125,7 @@ export default function Home() {
         className="absolute right-7 top-7 text-2xl p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
         onClick={() => {
           setOpenModal("dismissible");
-          //playSettings();
+          playSettings();
         }}
         style={{
           color: breakMessage ? "#EF3340" : "#98B4D4",
@@ -127,7 +134,7 @@ export default function Home() {
         <IoSettingsSharp />
       </button>
       <Toggle
-        //playSound={playSettings}
+        playSound={playSettings}
         breakMessage={breakMessage}
         setBreakMessage={setBreakMessage}
         setMinutes={setMinutes}
@@ -143,8 +150,8 @@ export default function Home() {
         breakMinutes={breakMinutes}
         newTime={newTime}
         onClose={() => setOpenModal(undefined)}
-        //playSound={playSettings}
-        //playError={playError}
+        playSound={playSettings}
+        playError={playError}
         minutes={minutes}
       />
       <div className="flex flex-col items-center justify-center h-[380px] w-[300px] rounded-[40px] bg-[#f4f5f0] shadow-xl drop-shadow-md">
@@ -164,7 +171,7 @@ export default function Home() {
             className="text-lg p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
             onClick={() => {
               handleStartStopClick();
-              //playClick();
+              playClick();
             }}
             style={{
               color: breakMessage ? "#EF3340" : "#98B4D4",
@@ -176,7 +183,7 @@ export default function Home() {
             className="text-lg p-[14px] rounded-full bg-[#f4f5f0] hover:scale-110 hover:duration-150 transition-transform shadow-md drop-shadow-md"
             onClick={() => {
               handleReset();
-              //playClick();
+              playClick();
             }}
             style={{
               color: breakMessage ? "#EF3340" : "#98B4D4",
