@@ -65,6 +65,7 @@ export default function Home() {
   const newTime = (newFocus: number, newBreak: number) => {
     setFocusMinutes(newFocus);
     setBreakMinutes(newBreak);
+    setSeconds(0);
     breakMessage ? setMinutes(newBreak) : setMinutes(newFocus);
   };
 
