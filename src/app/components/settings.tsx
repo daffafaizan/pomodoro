@@ -14,8 +14,8 @@ interface SettingsModalProps {
   setBreakMinutes: any;
   newTime: (newFocus: number, newBreak: number) => void;
   onClose: () => void;
-  //playSound: () => void;
-  //playError: () => void;
+  playSound: () => void;
+  playError: () => void;
 }
 
 export default function SettingsModal(props: SettingsModalProps) {
@@ -57,11 +57,11 @@ export default function SettingsModal(props: SettingsModalProps) {
 
   const submitChange = () => {
     if (errorDetected) {
-      //props.playError();
+      props.playError();
       setErrorDetected(false);
       props.onClose();
     } else {
-      //props.playSound();
+      props.playSound();
       props.newTime(newFocus, newBreak);
       props.onClose();
     }
@@ -76,7 +76,7 @@ export default function SettingsModal(props: SettingsModalProps) {
       onClose={() => {
         setErrorDetected(false);
         props.onClose();
-        //props.playSound();
+        props.playSound();
       }}
     >
       <Modal.Header className="flex flex-row items-center justify-center h-14"></Modal.Header>
