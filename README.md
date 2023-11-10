@@ -1,1 +1,1 @@
-Created with Next.js using Typescript
+Created with Next using Typescript
